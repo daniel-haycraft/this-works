@@ -17,28 +17,30 @@ var rollbar = new Rollbar({
 // record a generic message and send it to Rollbar
 rollbar.log('Hello world!')
 
-// app.use(express.static(path.join(__dirname, '/public')))
-// app.use('/js', express.static(path.join(__dirname, 'public/main.js')))
-// app.use('/styles', express.static(path.join(__dirname, 'public/main.css')))
-// app.use("/" ,express.static(path.join(__dirname, "/public")));
+app.use(express.static(path.join(__dirname, '/public')))
+app.use('/js', express.static(path.join(__dirname, '/public/main.js')))
+app.use('/styles', express.static(path.join(__dirname, '/public/main.css')))
+app.use("/" ,express.static(path.join(__dirname, "/public")));
 // app.use("/public", express.static(path.join(__dirname, "../public")));
 
 const buddies = require('./db.json')
 
-app.get('api/buddies', (req, res) => {
+// app.get('/api/test', (req, res) =>{
+//     console.log('endpoint test')
+//     res.sendStatus(418)
+// })
+app.get('/api/buddies', (req, res) => {
     rollbar.info('working .(get)')
     res.status(200).send(buddies)
 })
-app.get('api/test', (req, res) =>{
-    res.sendStatus(418)
-})
-app.delete('api/buddies/:index', (req, res) => {
+
+app.delete('/api/buddies/:index', (req, res) => {
     const deleteIndex = +req.params.index
     buddies.splice(deleteIndex, 1)
     rollbar.info('termiated fluffer')
     res.status(200).send(buddies)
 })
-app.post('api/buddies', (req, res)=> {
+app.post('/api/buddies', (req, res)=> {
     const { dogName } = req.body;
     buddies.push({
         dogName, 

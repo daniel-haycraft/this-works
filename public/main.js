@@ -1,16 +1,15 @@
 const container = document.querySelector('#container')
 const form = document.getElementById('var')
 
-const baseUrl = `api/buddies/`
+const baseUrl = `/api/buddies/`
 
 const budsCb = ({ data: buddies }) => displayBuddies(buddies)
 const errCb = err => console.log(err)
 
 const getBuds = () => axios.get(baseUrl).then(budsCb).catch(errCb)
-const deleteBud = index => axios.delete(`${baseUrl}/${index}`).then(budsCb).catch(errCb)
+const deleteBud = index => axios.delete(`${baseUrl}${index}`).then(budsCb).catch(errCb)
 const createNew = body => axios.post(baseUrl, body).then(budsCb).catch(errCb)
 
-console.log('connected')
 
 function submitHandler(e){
     e.preventDefault()
